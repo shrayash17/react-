@@ -1,0 +1,47 @@
+import { useState , useEffect} from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import axios from 'axios'
+
+function App() {
+  const [todo,setTodos]=useState(null)
+  const [id,setId]=useState(1)
+
+  useEffect(()=>{
+    axios.get("https://jsonplaceholder.typicode.com/posts/"+id)
+    .then((res)=>{
+      setTodos(res.data)
+    })
+
+
+  },[id])
+
+  function change(id){
+    setId(id)
+  }
+
+
+  return (
+    <>
+      <button onClick={()=>change(1)}>btn 1</button>
+      <button onClick={()=>change(2)}>btn 2</button>
+      <button onClick={()=>change(3)}>btb 3</button>
+      <Todo {...todo}/>
+    </>
+  )
+}
+
+function Todo({userId, id, title, body}){
+  return(
+    <>
+    <h1>User ID: {userId}</h1>
+    <h2>ID: {id}</h2>
+    <h3>Title: {title}</h3>
+    <p>{body}</p>
+    
+    </>
+  )
+}
+
+export default App
