@@ -1,0 +1,71 @@
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil'
+import {countAtom, evenSelector} from "./stores/atoms/Count"
+
+function App() {
+
+  return (
+    <>
+      <RecoilRoot>
+        <Count/>
+        
+        </RecoilRoot>      
+    </>
+  )
+}
+
+function Buttons(){
+  console.log("button rerendered")
+  const [count , setCount]=useRecoilState(countAtom)
+  return (
+    <>
+    <button onClick={()=>{
+      setCount(count+1)
+    }}>Increment</button>
+
+    <button onClick={()=>{
+      setCount(count-1)
+    }}>Decrement</button>
+
+    
+
+    </>
+  )
+}
+
+function Count(){
+  return (
+
+    <>
+    <CountRenderer/>
+    <Buttons/>
+    
+    
+    </>
+  )
+}
+
+function CountRenderer(){
+  const count = useRecoilValue(countAtom)
+  return (
+    <>
+    <b>{count}</b>
+    <EvenRendered/>
+    
+    </>
+  )
+}
+
+function EvenRendered(){
+  const isEven = useRecoilValue(evenSelector)
+  return(
+    <>
+      {isEven?"even":null}
+    </>
+  )
+}
+
+export default App
